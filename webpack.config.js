@@ -5,6 +5,9 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const OptimizeJsPlugin = require('optimize-js-plugin');
 
 
+var env = process.env.NODE_ENV;
+console.log('NODE_ENV:', env);
+
 module.exports = {
     entry: './src/index.js',
     output: {
