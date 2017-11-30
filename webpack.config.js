@@ -6,7 +6,10 @@ const OptimizeJsPlugin = require('optimize-js-plugin');
 
 
 module.exports = {
-    entry: './src/index.js',
+    entry: [
+        'react-hot-loader/patch',
+        './src/index.js'
+    ],
     output: {
         path: path.resolve(__dirname, 'build'),
         filename: 'app.bundle.js'
@@ -38,10 +41,19 @@ module.exports = {
 			template: 'src/index.html',
 			filename: 'index.html',
 			inject: 'body'
-		}),
-		new webpack.optimize.UglifyJsPlugin(),
-		new OptimizeJsPlugin({
-		  	sourceMap: false
 		})
 	]	
 };
+
+var env = process.env.NODE_ENV || 'development';
+
+console.log('NODE_ENV:', env);
+
+if (env === 'production') {
+plugins.push(
+    new webpack.optimize.UglifyJsPlugin(),
+    new OptimizeJsPlugin({
+      sourceMap: false
+    })
+  );
+}	
